@@ -22,3 +22,9 @@ $studentManageObject = new StudentManagement();
 register_activation_hook(__FILE__, array($studentManageObject, "createStudentTable"));
 
 register_deactivation_hook(__FILE__, array($studentManageObject, "dropStudentTable"));
+
+//add_shortcode("my-tag", array($studentManageObject, "sms_handle_first_shortcode"));
+
+//add_shortcode("format-string", "sms_handle_string_format");
+
+add_shortcode("sms-form", array($studentManageObject, "smsHandleFrontendForm"));

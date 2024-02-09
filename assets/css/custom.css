@@ -88,7 +88,7 @@
 /* Card layout style */
 
 .sms-plugin.card {
-    max-width: 400px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
     border-radius: 8px;
@@ -138,7 +138,8 @@
 
 /* Submit button style */
 
-.sms-plugin button {
+.sms-plugin button#btn_sms_form,
+.sms-plugin button#btn-upload-profile {
     background-color: #4caf50;
     color: white;
     padding: 12px 20px;
@@ -149,7 +150,8 @@
     transition: background-color 0.3s;
 }
 
-.sms-plugin button:hover {
+.sms-plugin button#btn_sms_form:hover,
+.sms-plugin button#btn-upload-profile {
     background-color: #45a049;
 }
 

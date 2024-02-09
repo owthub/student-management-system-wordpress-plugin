@@ -7,11 +7,11 @@
             }elseif(isset($action) && $action == "view"){
                 echo "View Student";
             }else{
-                
-                $nonce = wp_create_nonce("wp_nonce_add_student");
-
+            
                 echo "Add Student";
             }
+
+            $nonce = wp_create_nonce("wp_nonce_add_student");
         ?>
     </h2>
 
@@ -31,15 +31,22 @@
         <?php
     } ?>
     
-    <form class="add-student-form" method="post" <?php if($action == "edit") { 
-        ?> action="admin.php?page=student-system&action=edit&id=<?php echo $student['id'] ?>" <?php
-     }else{
-        ?>
-         action="admin.php?page=add-student"
-        <?php 
-    } ?>>
+    <form class="add-student-form" id="frm_sms_form" method="post" action="javascript:void(0);">
 
         <input type="hidden" name="wp_nonce_add_student" value="<?php echo $nonce; ?>">
+
+        <?php
+        if(isset($action) && $action == "edit"){
+          ?>
+            <input type="hidden" name="operation_type" value="edit"> 
+            <input type="hidden" name="student_id" value="<?php echo $student['id']; ?>"> 
+          <?php
+        }else{
+            ?>
+            <input type="hidden" name="operation_type" value="add">
+            <?php
+        }
+        ?>
 
         <!-- Name -->
         <div class="form-group">
@@ -101,6 +108,23 @@
             ?>>
         </div>
 
+        <!-- Bio -->
+        <div class="form-group">
+            <label for="phone">Bio Description</label>
+            <?php 
+            $content = isset($student['profile_bio']) && !empty($student['profile_bio']) ? $student['profile_bio'] : "";
+            $editor_id = "sms_bio_editor";
+            $args = array(
+                'tinymce'       => array(
+                    'toolbar1'      => 'bold,italic,underline,separator,alignleft,aligncenter,alignright,separator,link,unlink,undo,redo',
+                    'toolbar2'      => '',
+                    'toolbar3'      => '',
+                ),
+            );
+            wp_editor( $content, $editor_id, $args );
+            ?>
+        </div>
+
         <!-- Upload Button -->
         <input type="text" style="margin-bottom: 5px;" name="profile_url" id="profile_url" readonly>
 
@@ -112,7 +136,7 @@
                 // No submit button
         }else{
             ?>
-                <button type="submit" name="btn_submit">Submit</button>
+                <button type="submit" id="btn_sms_form" name="btn_submit">Submit</button>
             <?php
         }
         ?>
